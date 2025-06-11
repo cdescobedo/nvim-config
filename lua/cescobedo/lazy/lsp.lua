@@ -44,7 +44,9 @@ return {
             ensure_installed = {
                 "lua_ls",
                 "rust_analyzer",
-                "tsserver",
+                "ts_ls",
+		"basedpyright",
+		"ocaml-lsp",
                 "gopls",
             },
             handlers = {

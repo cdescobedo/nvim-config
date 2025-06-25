@@ -115,7 +115,22 @@ return {
                 { name = 'buffer' },
             })
         })
-
+	
+	vim.o.updatetime = 300 
+	-- Autocmd for LspAttach to set up per-buffer diagnostics
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("LspAttach_Diagnostics", { clear = true }),
+        callback = function(args)
+          -- Set a buffer-local autocmd for CursorHold
+          vim.api.nvim_create_autocmd("CursorHold", {
+            buffer = args.buf, -- Apply to the specific buffer the LSP attached to
+            callback = function()
+              vim.diagnostic.open_float(nil, { focusable = false })
+            end,
+            desc = "Show diagnostics on cursor hold for LSP buffer",
+          })
+        end,
+      })
         vim.diagnostic.config({
             -- update_in_insert = true,
             float = {
